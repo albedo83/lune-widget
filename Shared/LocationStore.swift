@@ -16,6 +16,7 @@ public struct StoredPlace: Codable, Equatable, Sendable {
 }
 
 /// Persists the chosen place in the shared App Group so the app and the widget agree.
+// @unchecked Sendable is safe: UserDefaults is thread-safe and `defaults` is immutable.
 public final class LocationStore: @unchecked Sendable {
     public static let appGroupID = "group.com.albedo83.lune"
     private static let key = "storedPlace"
@@ -32,10 +33,13 @@ public final class LocationStore: @unchecked Sendable {
             return try? JSONDecoder().decode(StoredPlace.self, from: data)
         }
         set {
-            if let newValue, let data = try? JSONEncoder().encode(newValue) {
-                defaults.set(data, forKey: Self.key)
-            } else {
+            guard let newValue else {
                 defaults.removeObject(forKey: Self.key)
+                return
+            }
+            // On encode failure keep the previously stored value.
+            if let data = try? JSONEncoder().encode(newValue) {
+                defaults.set(data, forKey: Self.key)
             }
         }
     }

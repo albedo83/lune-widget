@@ -1,4 +1,5 @@
 # NOTE: Lune.xcodeproj is generated from this file (run `xcodegen`); it is not committed.
+# Run all tests with `scripts/test.sh` (signing is disabled for the test run only).
 name: Lune
 options:
   bundleIdPrefix: com.albedo83
