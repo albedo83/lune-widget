@@ -288,7 +288,42 @@ Copy (English source; translations fr/de/es/it in the catalog): phase names; "Mo
 - [ ] **Step 1:** Build and run the app; deny then grant location in System Settings; check the preview updates and `LocationStore.current` is filled (`defaults read group.com.albedo83.lune` inside the container).
 - [ ] **Step 2:** Commit `feat: companion app`
 
-### Task 10: On-desktop verification
+### Task 10: Realistic moon (pre-rendered NASA phases)
+
+User change request after Task 9: "une lune réaliste, pas un dessin". Spec section "Image de la lune" is binding.
+
+**Files:**
+- Create: `Tools/MoonRender/Package.swift` (executable `moonrender`, macOS 14, no dependencies; reads images with ImageIO/CoreGraphics)
+- Create: `Tools/MoonRender/Sources/moonrender/main.swift`, `Tools/MoonRender/Sources/MoonRenderCore/Renderer.swift` (library target so it is testable)
+- Create: `Tools/MoonRender/Tests/MoonRenderCoreTests/RendererTests.swift`
+- Existing inputs (already downloaded, commit them): `Tools/MoonRender/nasa/lroc_color_2k.jpg` (2048×1024 sRGB, equirectangular, longitude −180…180 left→right, centre = lon 0), `Tools/MoonRender/nasa/ldem_4_uint.tif` (1440×720, uint16, half-metres relative to 1 727 400 m)
+- Create: `Tools/MoonRender/README.md` (how to regenerate, NASA credit)
+- Create (generated, committed): `Shared/Moon.xcassets/moon-000.imageset` … `moon-355.imageset` (72 frames, every 5° of elongation), `Shared/Moon.xcassets/Contents.json`
+- Modify: `Shared/MoonView.swift` (replace the drawn shape with the frame image), `Shared/NightWidgetView.swift:60`, `LuneTests/MoonGeometryTests.swift` → `LuneTests/MoonFrameTests.swift`, `App/ContentView.swift` (credit line), `Shared/Localizable.xcstrings`, `README.md`, `project.yml` (asset catalog in both targets if not picked up automatically)
+
+**Interfaces:**
+- Consumes: `NightReport.illumination`, `NightReport.isWaxing`, `NightEntry.latitude`.
+- Produces:
+  - `MoonRenderCore.Renderer(colorMap: CGImage, heightMap: CGImage)` with `func render(elongation: Double, size: Int) -> CGImage` — transparent background, disk diameter = `size` minus a 2 px margin, viewer at sub-Earth point (lat 0, lon 0), north up, sun direction from `elongation` (0 = new, 90 = first quarter lit on the right, 180 = full).
+  - `moonrender <out-dir> [--size 256] [--step 5]` writes `moon-EEE.png` + imageset `Contents.json` per frame.
+  - `enum MoonFrame { static func elongation(illumination: Double, isWaxing: Bool) -> Double; static func name(illumination: Double, isWaxing: Bool, step: Int = 5) -> String /* "moon-090" */; static func rotation(latitude: Double) -> Angle /* 0° north, 180° south */ }` in `Shared/MoonView.swift`.
+  - `MoonView(illumination: Double, isWaxing: Bool, latitude: Double, fullColor: Bool)` — same call signature as today, now `Image(MoonFrame.name(...)).resizable().rotationEffect(MoonFrame.rotation(...))`; in accented/vibrant modes use `.widgetAccentedRenderingMode(.desaturated)` on macOS 15+ (availability check), else the plain image.
+
+Shading (decided): per pixel on the disk compute the sphere normal, its selenographic lat/lon, sample albedo (bilinear) from the colour map; perturb the normal with the height-map gradient (bump strength tuned so craters show relief near the terminator but the full moon stays flat-looking); reflectance = Lunar-Lambert blend `L·2μ0/(μ0+μ) + (1−L)·μ0` with L = 0.8; add faint earthshine on the night side proportional to (1 − illumination), max 3 % of full-moon brightness; antialias the limb (supersample 2×); sRGB output. Frames ≈ 256 px (shown at ~100 pt, @2x).
+
+- [ ] **Step 1: Failing tests**
+  - `RendererTests.fullMoonCentreIsBright`: render(180, 64) centre pixel luminance > 0.5, corner pixel alpha == 0.
+  - `RendererTests.newMoonIsDark`: render(0, 64) mean luminance over the disk < 0.05.
+  - `RendererTests.firstQuarterLitOnRight`: render(90, 64) mean luminance of right half > 5 × left half.
+  - `RendererTests.lastQuarterLitOnLeft`: render(270, 64) left half > 5 × right half.
+  - `MoonFrameTests`: `elongation(0, true)` = 0; `elongation(1, true)` = 180; `elongation(0.5, true)` = 90 ±0.01; `elongation(0.5, false)` = 270 ±0.01; `name(0.5, true)` = "moon-090"; `name(0.999, false)` = "moon-185" (elongation 182.6°, nearest 5° step); `name(0.0001, false)` = "moon-000" (358.9° wraps to 360 → 0); `rotation(48)` = 0°, `rotation(-33)` = 180°.
+- [ ] **Step 2:** `cd Tools/MoonRender && swift test` and `scripts/test.sh` → FAIL
+- [ ] **Step 3:** Implement renderer + CLI; run `swift run moonrender ../../Shared/Moon.xcassets`; implement `MoonFrame` and the new `MoonView`; add credit string "Moon imagery: NASA's Scientific Visualization Studio" (translated, 5 languages) under the preview in the app; README credit.
+- [ ] **Step 4:** Both test commands → PASS (`** TEST SUCCEEDED **`, LuneKit 27/27, MoonRender tests pass). Check the asset catalog adds < 6 MB to the app.
+- [ ] **Step 5:** Regenerate the widget preview PNGs (fr 2026-10-26, fr 2026-11-10, fr two-windows, en 2026-11-10) and a contact sheet of 8 frames (0, 45, 90, 135, 180, 225, 270, 315) into the task workspace for the user to look at.
+- [ ] **Step 6:** Commit `feat: realistic NASA moon`.
+
+### Task 11: On-desktop verification
 
 - [ ] **Step 1:** Run the app once, add the widget to the desktop, check it against USNO for today at the current location (rise/set ±2 min).
 - [ ] **Step 2:** Edit the widget → search "Sydney" → check times are in Sydney time; add a second widget with "Current Location", both coexist.

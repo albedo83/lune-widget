@@ -126,9 +126,18 @@ langue et la région du Mac.
   (croissant ou gibbeuse). La ligne « prochaine phase » cherche
   l'événement **après** cette période, pour ne jamais afficher « Pleine
   lune » et « Pleine lune dans 0 j » en même temps.
-- **Dessin** : terminateur réel à partir de la fraction illuminée et du
-  sens (croissante/décroissante), orienté pour l'hémisphère du lieu
-  (côté éclairé à droite quand la lune croît dans l'hémisphère nord).
+- **Image de la lune** (demande de l'auteur : « une lune réaliste, pas un
+  dessin ») : un **rendu photoréaliste** de la vraie surface lunaire, pas un
+  aplat. Méthode choisie par l'auteur : sphère texturée avec les cartes de
+  la NASA (Scientific Visualization Studio, *CGI Moon Kit*, ID 4720 :
+  couleur `lroc_color_2k.jpg`, relief `ldem_4_uint.tif`), éclairée selon la
+  phase, avec le relief qui projette des ombres le long du terminateur.
+  Les images sont **calculées à l'avance** (une par pas de phase) par un
+  outil du dépôt et intégrées à l'app ; le widget affiche celle qui
+  correspond à la phase. Face visible de la Terre (pas de libration). Côté
+  éclairé à droite quand la lune croît dans l'hémisphère nord ; image
+  retournée de 180° dans l'hémisphère sud. Crédit obligatoire
+  « NASA's Scientific Visualization Studio » dans le README et dans l'app.
 - **Précision visée** : ±2 min sur les heures par rapport à une référence
   (IMCCE ou USNO), vérifiée par des tests sur des dates et lieux connus.
 
