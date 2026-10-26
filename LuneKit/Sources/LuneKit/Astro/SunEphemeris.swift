@@ -6,18 +6,16 @@ public enum SunEphemeris {
 
     /// Apparent geometric longitude in degrees, 0..<360.
     public static func apparentLongitude(at date: Date) -> Double {
-        let t = centuries(date)
+        let t = EarthOrientation.centuries(date)
         let trueLongitude = geometricLongitude(t) + equationOfCenter(t)
         return AngleMath.normalize(trueLongitude - 0.00569 - 0.00478 * sin(AngleMath.rad(omega(t))))
     }
 
     /// Apparent equatorial coordinates (degrees) and distance.
     public static func apparent(at date: Date) -> Equatorial {
-        let t = centuries(date)
+        let t = EarthOrientation.centuries(date)
         let lambda = AngleMath.rad(apparentLongitude(at: date))
-        let eps0 = 23.0 + 26.0 / 60 + 21.448 / 3600
-            - (46.8150 * t + 0.00059 * t * t - 0.001813 * t * t * t) / 3600
-        let eps = AngleMath.rad(eps0 + 0.00256 * cos(AngleMath.rad(omega(t))))
+        let eps = AngleMath.rad(EarthOrientation.meanObliquity(t) + 0.00256 * cos(AngleMath.rad(omega(t))))
         let ra = AngleMath.deg(atan2(cos(eps) * sin(lambda), cos(lambda)))
         let dec = AngleMath.deg(asin(sin(eps) * sin(lambda)))
 
@@ -29,10 +27,6 @@ public enum SunEphemeris {
     }
 
     // MARK: - Private
-
-    private static func centuries(_ date: Date) -> Double {
-        (JulianDay.jde(date) - 2451545.0) / 36525
-    }
 
     private static func geometricLongitude(_ t: Double) -> Double {
         AngleMath.normalize(280.46646 + 36000.76983 * t + 0.0003032 * t * t)
