@@ -9,13 +9,28 @@ public enum NightCalculator {
     public static func displayedPeriod(at now: Date, location: GeoLocation, timeZone: TimeZone) -> DateInterval {
         let cal = calendar(timeZone)
         let midnight = cal.startOfDay(for: now)
+        let switchInstant = displaySwitch(onDayStarting: midnight, location: location, cal)
+        let nightDay = now < switchInstant ? cal.date(byAdding: .day, value: -1, to: midnight)! : midnight
+        let nextDay = cal.date(byAdding: .day, value: 1, to: nightDay)!
+        return DateInterval(start: localNoon(of: nightDay, cal), end: localNoon(of: nextDay, cal))
+    }
+
+    /// The next instant strictly after `now` at which `displayedPeriod` changes.
+    static func nextDisplaySwitch(after now: Date, location: GeoLocation, timeZone: TimeZone) -> Date {
+        let cal = calendar(timeZone)
+        let midnight = cal.startOfDay(for: now)
+        let today = displaySwitch(onDayStarting: midnight, location: location, cal)
+        if today > now { return today }
+        return displaySwitch(onDayStarting: cal.date(byAdding: .day, value: 1, to: midnight)!, location: location, cal)
+    }
+
+    /// Sunrise of the day starting at `midnight`, or local noon if the Sun does not rise before noon.
+    private static func displaySwitch(onDayStarting midnight: Date, location: GeoLocation, _ cal: Calendar) -> Date {
         let noon = localNoon(of: midnight, cal)
         let sunrise = EventSearch.crossings(in: DateInterval(start: midnight, end: noon), threshold: Altitudes.riseSet) {
             Horizon.sunAltitude(at: $0, from: location)
         }.first { $0.isRising }?.date
-        let nightDay = now < (sunrise ?? noon) ? cal.date(byAdding: .day, value: -1, to: midnight)! : midnight
-        let nextDay = cal.date(byAdding: .day, value: 1, to: nightDay)!
-        return DateInterval(start: localNoon(of: nightDay, cal), end: localNoon(of: nextDay, cal))
+        return sunrise ?? noon
     }
 
     public static func report(at now: Date, location: GeoLocation, timeZone: TimeZone) -> NightReport {
