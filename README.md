@@ -8,4 +8,4 @@ En cours de développement : voir la [conception](docs/superpowers/specs) et le 
 
 Code sous licence [MIT](LICENSE) : fais-en ce que tu veux, garde juste la mention de copyright.
 
-Images de la lune : NASA's Scientific Visualization Studio, [CGI Moon Kit](https://svs.gsfc.nasa.gov/4720). Elles ne sont pas couvertes par la licence MIT (voir [NOTICE](NOTICE)) ; merci de créditer la NASA si tu les réutilises.
+Images de la lune : NASA's Scientific Visualization Studio, [CGI Moon Kit](https://svs.gsfc.nasa.gov/4720), rendues par [`Tools/MoonRender`](Tools/MoonRender). Elles ne sont pas couvertes par la licence MIT (voir [NOTICE](NOTICE)) ; merci de créditer la NASA si tu les réutilises.

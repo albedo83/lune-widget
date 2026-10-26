@@ -1088,6 +1088,40 @@
           }
         }
       }
+    },
+    "Moon imagery: NASA's Scientific Visualization Studio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moon imagery: NASA's Scientific Visualization Studio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Images de la lune : NASA's Scientific Visualization Studio"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mondbilder: NASA's Scientific Visualization Studio"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imágenes de la Luna: NASA's Scientific Visualization Studio"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Immagini della Luna: NASA's Scientific Visualization Studio"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

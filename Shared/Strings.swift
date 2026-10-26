@@ -20,6 +20,7 @@ enum Strings {
     static let preview = "Preview"
     static let previewHint = "Press “Use my location” to see tonight’s preview."
     static let chooseCity = "Choose a city: right-click › Edit Widget"
+    static let moonCredit = "Moon imagery: NASA's Scientific Visualization Studio"
 
     /// Localized value of `key` in the language of `locale` (falls back to the bundle's preferred language).
     static func localized(_ key: String, locale: Locale) -> String {

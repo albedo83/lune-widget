@@ -63,12 +63,15 @@ struct ContentView: View {
 
     @ViewBuilder private var preview: some View {
         if let place {
-            ZStack {
-                NightBackground()
-                NightWidgetView(entry: NightEntry(place: place, at: now)).padding(16)
+            VStack(alignment: .leading, spacing: 6) {
+                ZStack {
+                    NightBackground()
+                    NightWidgetView(entry: NightEntry(place: place, at: now)).padding(16)
+                }
+                .frame(width: 364, height: 170)
+                .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+                Text(text(Strings.moonCredit)).font(.caption).foregroundStyle(.secondary)
             }
-            .frame(width: 364, height: 170)
-            .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
         } else {
             Text(text(Strings.previewHint)).foregroundStyle(.secondary)
         }

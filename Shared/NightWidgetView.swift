@@ -59,7 +59,6 @@ struct NightWidgetView: View {
         HStack(alignment: .center, spacing: 12) {
             MoonView(illumination: r.illumination, isWaxing: r.isWaxing, latitude: entry.latitude, fullColor: fullColor)
                 .frame(width: 92, height: 92)
-                .widgetAccentable()
             VStack(alignment: .leading, spacing: 3) {
                 header(r)
                 Text(Strings.phaseText(r.phaseName, locale: locale))

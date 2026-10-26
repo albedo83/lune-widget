@@ -25,7 +25,9 @@ targets:
     platform: macOS
     sources:
       - App
-      - Shared
+      # The moon frames ship once, in the widget extension; the app loads them from there (MoonFrame.bundle).
+      - path: Shared
+        excludes: [Moon.xcassets]
     dependencies:
       - package: LuneKit
       - target: LuneWidget
