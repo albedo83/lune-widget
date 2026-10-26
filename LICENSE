@@ -19,11 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-Moon imagery: the colour and elevation maps in Tools/MoonRender/nasa/ and the
-moon images rendered from them come from NASA's Scientific Visualization
-Studio, "CGI Moon Kit" (https://svs.gsfc.nasa.gov/4720). They are not covered
-by the MIT license above; please credit "NASA's Scientific Visualization
-Studio" when reusing them.
