@@ -1,0 +1,77 @@
+# NOTE: Lune.xcodeproj is generated from this file (run `xcodegen`); it is not committed.
+name: Lune
+options:
+  bundleIdPrefix: com.albedo83
+  deploymentTarget:
+    macOS: "14.0"
+  developmentLanguage: en
+  knownRegions: [en, fr, de, es, it]
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    DEVELOPMENT_TEAM: 8Y86E7HK7M
+    CODE_SIGN_STYLE: Automatic
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_EMIT_LOC_STRINGS: YES
+packages:
+  LuneKit:
+    path: LuneKit
+targets:
+  Lune:
+    type: application
+    platform: macOS
+    sources:
+      - App
+      - Shared
+    dependencies:
+      - package: LuneKit
+      - target: LuneWidget
+        embed: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.albedo83.lune
+        INFOPLIST_FILE: App/Info.plist
+        CODE_SIGN_ENTITLEMENTS: App/Lune.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ENABLE_HARDENED_RUNTIME: YES
+        GENERATE_INFOPLIST_FILE: NO
+  LuneWidget:
+    type: app-extension
+    platform: macOS
+    sources:
+      - Widget
+      - Shared
+    dependencies:
+      - package: LuneKit
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.albedo83.lune.widget
+        INFOPLIST_FILE: Widget/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Widget/LuneWidget.entitlements
+        ENABLE_HARDENED_RUNTIME: YES
+        GENERATE_INFOPLIST_FILE: NO
+        SKIP_INSTALL: YES
+  LuneTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - LuneTests
+    dependencies:
+      - target: Lune
+      - package: LuneKit
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.albedo83.lune.tests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/Lune.app/Contents/MacOS/Lune
+        BUNDLE_LOADER: $(TEST_HOST)
+schemes:
+  Lune:
+    build:
+      targets:
+        Lune: all
+        LuneWidget: all
+    test:
+      targets: [LuneTests]

@@ -1,0 +1,76 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "NSLocationUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lune uses your location to compute moonrise, moonset and astronomical night where you are."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lune utilise votre position pour calculer les heures de lever et de coucher de la lune et la nuit astronomique là où vous êtes."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lune verwendet Ihren Standort, um Mondauf- und Monduntergang sowie die astronomische Nacht an Ihrem Ort zu berechnen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lune usa tu ubicación para calcular las horas de salida y puesta de la luna y la noche astronómica donde te encuentras."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lune usa la tua posizione per calcolare gli orari di levata e tramonto della luna e la notte astronomica dove ti trovi."
+          }
+        }
+      }
+    },
+    "NSLocationWhenInUseUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lune uses your location to compute moonrise, moonset and astronomical night where you are."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lune utilise votre position pour calculer les heures de lever et de coucher de la lune et la nuit astronomique là où vous êtes."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lune verwendet Ihren Standort, um Mondauf- und Monduntergang sowie die astronomische Nacht an Ihrem Ort zu berechnen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lune usa tu ubicación para calcular las horas de salida y puesta de la luna y la noche astronómica donde te encuentras."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lune usa la tua posizione per calcolare gli orari di levata e tramonto della luna e la notte astronomica dove ti trovi."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
