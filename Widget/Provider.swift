@@ -34,7 +34,9 @@ struct Provider: AppIntentTimelineProvider {
     }
 
     private func entry(at date: Date, now: Date, place: ResolvedPlace?) -> NightEntry {
-        guard let place else { return NightEntry(date: date, placeName: nil, report: nil, latitude: 0) }
+        guard let place else {
+            return NightEntry(date: date, placeName: nil, report: nil, latitude: 0, timeZone: .current)
+        }
         return NightEntry(date: date, placeName: place.name,
                           report: NightCalculator.report(at: now, location: place.location, timeZone: place.timeZone),
                           latitude: place.location.latitude, timeZone: place.timeZone,
@@ -63,8 +65,12 @@ enum CurrentLocation {
     static func fetch() async -> StoredPlace? {
         let manager = CLLocationManager()
         guard manager.isAuthorizedForWidgetUpdates || isAuthorized(manager.authorizationStatus) else { return nil }
-        guard let location = await withTimeout({ await firstLocation() }) else { return nil }
-        let placemark = await withTimeout { try? await CLGeocoder().reverseGeocodeLocation(location).first }
+        guard let location = await withTimeout(timeout, operation: { await firstLocation() }) else { return nil }
+        // CLGeocoder ignores task cancellation: cancel the request itself when the deadline passes.
+        let geocoder = GeocoderBox()
+        let placemark = await withTimeout(timeout, operation: {
+            try? await geocoder.value.reverseGeocodeLocation(location).first
+        }, onTimeout: { geocoder.value.cancelGeocode() })
         let name = placemark.flatMap { $0.locality ?? $0.name } ?? ""
         let tz = placemark?.timeZone ?? .current
         return StoredPlace(location: GeoLocation(latitude: location.coordinate.latitude,
@@ -84,18 +90,9 @@ enum CurrentLocation {
         } catch {}
         return nil
     }
+}
 
-    /// Runs `work`, returning nil if it has not finished within `timeout`.
-    private static func withTimeout<T: Sendable>(_ work: @escaping @Sendable () async -> T?) async -> T? {
-        await withTaskGroup(of: T?.self) { group in
-            group.addTask { await work() }
-            group.addTask {
-                try? await Task.sleep(for: timeout)
-                return nil
-            }
-            let first = await group.next() ?? nil
-            group.cancelAll()
-            return first
-        }
-    }
+/// CLGeocoder is thread-safe for start/cancel but not marked Sendable.
+private final class GeocoderBox: @unchecked Sendable {
+    let value = CLGeocoder()
 }

@@ -9,7 +9,7 @@ struct NightEntry: TimelineEntry {
     var report: NightReport?
     let latitude: Double
     /// Time zone of the place; every time and date is shown in it.
-    var timeZone: TimeZone = .current
+    let timeZone: TimeZone
     /// Shows the location arrow next to the name, like Weather.
     var isCurrentLocation = false
 }
@@ -146,7 +146,7 @@ struct NightWidgetView: View {
 
     private func nextPhaseLine(_ r: NightReport) -> some View {
         HStack(spacing: 4) {
-            Text(r.nextPhase == .full ? "○" : "●")
+            Text(verbatim: r.nextPhase == .full ? "○" : "●")
             Text(Strings.nextPhase(r.nextPhase, date: r.nextPhaseDate, now: entry.date, tz: tz, locale: locale))
         }
         .font(.system(size: 11))

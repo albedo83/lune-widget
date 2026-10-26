@@ -27,6 +27,12 @@ final class StringsTests: XCTestCase {
         XCTAssertEqual(text, "Nouvelle lune dans 14 j (9 nov.)")
     }
 
+    func testFrenchNextPhaseToday() {
+        let text = Strings.nextPhase(.new, date: parisDate(2026, 11, 9, 8, 2), now: parisDate(2026, 11, 9, 6, 0),
+                                     tz: paris, locale: fr)
+        XCTAssertEqual(text, "Nouvelle lune aujourd'hui (9 nov.)")
+    }
+
     func testEveryCatalogKeyHasFiveLanguages() throws {
         let url = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent().deletingLastPathComponent()

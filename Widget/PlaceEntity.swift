@@ -47,14 +47,21 @@ struct PlaceEntity: AppEntity, Hashable {
 /// Searched places keyed by id, so `entities(for:)` can restore name and time zone from an id alone.
 enum PlaceCache {
     private static let key = "placeCache"
-    private struct Item: Codable { var name: String; var timeZoneID: String; var subtitle: String? }
+    private static let limit = 50
+    private struct Item: Codable { var name: String; var timeZoneID: String; var subtitle: String?; var savedAt: Date }
 
     private static var defaults: UserDefaults { UserDefaults(suiteName: LocationStore.appGroupID) ?? .standard }
 
     static func save(_ places: [PlaceEntity]) {
         var all = load()
         for p in places where !p.isCurrent {
-            all[p.id] = Item(name: p.name, timeZoneID: p.timeZoneID ?? TimeZone.current.identifier, subtitle: p.subtitle)
+            all[p.id] = Item(name: p.name, timeZoneID: p.timeZoneID ?? TimeZone.current.identifier,
+                             subtitle: p.subtitle, savedAt: Date())
+        }
+        // Keep only the most recent entries.
+        if all.count > limit {
+            all = Dictionary(uniqueKeysWithValues: all.sorted { $0.value.savedAt > $1.value.savedAt }.prefix(limit)
+                .map { ($0.key, $0.value) })
         }
         if let data = try? JSONEncoder().encode(all) { defaults.set(data, forKey: key) }
     }

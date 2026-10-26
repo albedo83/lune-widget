@@ -324,7 +324,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vollmond in %lld T. (%@)"
+            "value" : "Vollmond in %lld Tg. (%@)"
           }
         },
         "es" : {
@@ -337,6 +337,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Luna piena tra %lld g (%@)"
+          }
+        }
+      }
+    },
+    "Full moon today (%@)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full moon today (%@)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pleine lune aujourd'hui (%@)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vollmond heute (%@)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luna llena hoy (%@)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luna piena oggi (%@)"
           }
         }
       }
@@ -494,7 +528,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Neumond in %lld T. (%@)"
+            "value" : "Neumond in %lld Tg. (%@)"
           }
         },
         "es" : {
@@ -507,6 +541,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Luna nuova tra %lld g (%@)"
+          }
+        }
+      }
+    },
+    "New moon today (%@)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New moon today (%@)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouvelle lune aujourd'hui (%@)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neumond heute (%@)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luna nueva hoy (%@)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luna nuova oggi (%@)"
           }
         }
       }
@@ -664,7 +732,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abnehmender Mond"
+            "value" : "Abnehmender Dreiviertelmond"
           }
         },
         "es" : {
@@ -732,7 +800,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zunehmender Mond"
+            "value" : "Zunehmender Dreiviertelmond"
           }
         },
         "es" : {

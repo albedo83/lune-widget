@@ -81,6 +81,10 @@ enum Strings {
         cal.timeZone = tz
         let days = cal.dateComponents([.day], from: cal.startOfDay(for: now), to: cal.startOfDay(for: date)).day ?? 0
         let day = date.formatted(Date.FormatStyle(locale: locale, timeZone: tz).day().month(.abbreviated))
+        if days <= 0 {
+            let key = p == .full ? "Full moon today (%@)" : "New moon today (%@)"
+            return String(format: localized(key, locale: locale), locale: locale, day)
+        }
         let key = p == .full ? "Full moon in %lld d (%@)" : "New moon in %lld d (%@)"
         return String(format: localized(key, locale: locale), locale: locale, days, day)
     }
