@@ -37,7 +37,8 @@ public enum NightCalculator {
         let reference = midpoint(darkDomain ?? period)
         let elongation = MoonPhases.elongation(at: reference)
         let isWaxing = elongation < 180
-        let nextPhase: PrincipalPhase = isWaxing ? .full : .new
+        // Chosen at the period end, not at the reference: a principal phase between the two must not be repeated.
+        let nextPhase: PrincipalPhase = MoonPhases.elongation(at: period.end) < 180 ? .full : .new
 
         return NightReport(
             period: period,

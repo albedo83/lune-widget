@@ -88,3 +88,14 @@ private func near(_ a: Date?, _ b: Date, _ tol: TimeInterval = 120) -> Bool {
     #expect(r.period.start == utc("2026-10-26T01:00:00Z"))
     #expect(r.period.start == local("2026-10-26 12:00", tz: "Australia/Sydney"))
 }
+
+@Test func nextPhaseSkipsPrincipalAfterReference() {
+    // Full moon 2026-10-26 04:12Z (05:12 CET) falls after the reference (~00:35) of the night of 2026-10-25.
+    let r = NightCalculator.report(at: local("2026-10-25 21:00"), location: parisLoc, timeZone: parisTZ)
+    #expect(r.period.start == local("2026-10-25 12:00"))
+    #expect(r.referenceDate < utc("2026-10-26T04:12:00Z"))
+    #expect(r.phaseName == .fullMoon)
+    #expect(r.isWaxing)
+    #expect(r.nextPhase == .new)
+    #expect(near(r.nextPhaseDate, utc("2026-11-09T07:02:00Z"), 300))
+}

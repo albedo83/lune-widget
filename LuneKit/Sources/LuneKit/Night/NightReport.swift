@@ -25,7 +25,8 @@ public struct NightReport: Sendable, Equatable {
     public var illumination: Double
     public var isWaxing: Bool
     public var phaseName: MoonPhaseName
-    /// `.full` when waxing, `.new` when waning.
+    /// `.full` if the elongation at `period.end` is below 180°, else `.new` (independent of `isWaxing`, which is
+    /// taken at `referenceDate`).
     public var nextPhase: PrincipalPhase
     /// First occurrence of `nextPhase` after the end of the period.
     public var nextPhaseDate: Date
