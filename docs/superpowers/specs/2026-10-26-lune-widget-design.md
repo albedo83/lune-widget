@@ -80,7 +80,12 @@ Premier croissant
 ```
 
 Fond sombre type « nuit », texte blanc, ligne nuit astro en bleu pâle,
-fenêtre noire en vert quand elle existe. Interface en français.
+fenêtre noire en vert quand elle existe.
+
+**Langues** : interface traduite (demande de l'auteur, « quelques langues au
+moins »). *Choix du constructeur* : anglais (langue de base), français,
+allemand, espagnol, italien. Heures, dates et durées formatées selon la
+langue et la région du Mac.
 
 ## Règles de calcul
 
