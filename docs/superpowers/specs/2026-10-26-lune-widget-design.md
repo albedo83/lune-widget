@@ -84,12 +84,15 @@ fenêtre noire en vert quand elle existe. Interface en français.
 
 ## Règles de calcul
 
-- **« La nuit » affichée** : la nuit astronomique en cours si on est dedans,
-  sinon la prochaine (celle qui commence ce soir). Elle bascule à la fin de
-  la nuit astronomique (aube astro).
-- **Lever / coucher de lune** affichés : ceux qui encadrent la nuit
-  affichée (le prochain lever et le prochain coucher à partir de midi du
-  jour de la nuit), pour qu'ils soient lisibles en regard de la nuit.
+- **« La nuit » affichée** *(choix du constructeur)* : chaque nuit est
+  rattachée à un jour J et couvre la période de midi local J à midi local
+  J+1. On affiche la nuit en cours ; le widget passe à la nuit suivante au
+  **lever du soleil** (ou à midi local si le soleil ne se lève pas ce
+  jour-là). Ainsi, à 9 h, on voit déjà la nuit à venir, et les jours sans
+  nuit astronomique ont quand même un repère fixe.
+- **Lever / coucher de lune** affichés : le premier lever et le premier
+  coucher dans la période midi J → midi J+1. S'il n'y en a pas dans cette
+  période, afficher « — ».
 - **Fenêtre noire** : intervalle(s) de la nuit astronomique où l'altitude du
   centre de la lune est sous l'horizon (−0,833°, réfraction et demi-diamètre
   inclus, convention standard du lever/coucher). Une nuit peut contenir deux
@@ -100,11 +103,24 @@ fenêtre noire en vert quand elle existe. Interface en français.
   la ligne ✦ et pas de fenêtre noire.
 - **Lune qui ne se lève ou ne se couche pas** ce jour-là : afficher « — »
   pour l'heure manquante.
+- **Hautes latitudes** *(choix du constructeur)* : pas de limite de
+  latitude. Si le soleil ne descend jamais à −18° : « Pas de nuit
+  astronomique ». S'il reste sous −18° toute la période : nuit affichée
+  « toute la nuit » et fenêtre noire calculée sur la période entière.
+  Événement de lune absent de la période : « — ».
 - **Heures** affichées dans le fuseau horaire **du lieu choisi** (comme
   Météo), format 24 h.
 - **Phase** : 8 noms usuels en français (Nouvelle lune, Premier croissant,
   Premier quartier, Lune gibbeuse croissante, Pleine lune, Lune gibbeuse
-  décroissante, Dernier quartier, Dernier croissant).
+  décroissante, Dernier quartier, Dernier croissant). *Choix du
+  constructeur* : phase, % et dessin sont calculés pour le **milieu de la
+  nuit affichée** (ce qui compte pour la photo), pas pour l'instant
+  présent. Les 4 phases principales (nouvelle, premier quartier, pleine,
+  dernier quartier) ne s'affichent que si l'instant exact de la phase tombe
+  dans la période midi J → midi J+1 ; sinon on prend le nom intermédiaire
+  (croissant ou gibbeuse). La ligne « prochaine phase » cherche
+  l'événement **après** cette période, pour ne jamais afficher « Pleine
+  lune » et « Pleine lune dans 0 j » en même temps.
 - **Dessin** : terminateur réel à partir de la fraction illuminée et du
   sens (croissante/décroissante), orienté pour l'hémisphère du lieu
   (côté éclairé à droite quand la lune croît dans l'hémisphère nord).
@@ -119,6 +135,9 @@ fenêtre noire en vert quand elle existe. Interface en français.
 - Configuration du widget par App Intents (paramètre « Lieu » : Position
   actuelle ou une ville recherchée par nom).
 - Dépôt Git public sur GitHub : `albedo83/lune-widget`.
+- Compte Apple Developer : équipe `8Y86E7HK7M` (individuel).
+- Identifiants : app `com.albedo83.lune`, widget
+  `com.albedo83.lune.widget`, App Group `group.com.albedo83.lune`.
 
 ## Laissé au constructeur
 
