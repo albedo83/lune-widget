@@ -76,7 +76,11 @@ struct ContentView: View {
 
     private func locate() async {
         status = .locating
-        guard await authorizer.ensureAuthorized() else { status = .denied; return }
+        guard await authorizer.ensureAuthorized() else {
+            // Still undetermined means the prompt never got an answer: not a denial.
+            status = authorizer.isUndetermined ? .failed : .denied
+            return
+        }
         guard let found = await CurrentPlaceLocator.fetch() else { status = .failed; return }
         store.current = found
         place = found

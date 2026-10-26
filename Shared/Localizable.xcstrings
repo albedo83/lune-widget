@@ -868,7 +868,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Widget hinzufügen: Rechtsklick auf den Schreibtisch, „Widgets bearbeiten“ wählen und nach „Lune“ suchen. Den Ort ändern Sie per Rechtsklick auf das Widget und „„Lune“ bearbeiten“."
+            "value" : "Widget hinzufügen: Rechtsklick auf den Schreibtisch, „Widgets bearbeiten“ wählen und nach „Lune“ suchen. Den Ort ändern Sie per Rechtsklick auf das Widget und „Lune“ bearbeiten."
           }
         },
         "es" : {
@@ -1072,7 +1072,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tippen Sie auf „Meinen Standort verwenden“, um die Vorschau für heute Abend zu sehen."
+            "value" : "Klicken Sie auf „Meinen Standort verwenden“, um die Vorschau für heute Abend zu sehen."
           }
         },
         "es" : {
