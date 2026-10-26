@@ -12,6 +12,13 @@ enum Strings {
     static let allNight = "All night"
     static let night = "night"
     static let currentLocation = "Current Location"
+    static let howToAdd = "Add the widget: right-click the desktop, choose Edit Widgets, then search for “Lune”. To change the place, right-click the widget and choose Edit “Lune”."
+    static let useMyLocation = "Use my location"
+    static let locating = "Locating…"
+    static let locationDenied = "Location access is off for Lune. Allow it in System Settings › Privacy & Security › Location Services."
+    static let locationFailed = "Could not determine your location. Try again."
+    static let preview = "Preview"
+    static let previewHint = "Press “Use my location” to see tonight’s preview."
     static let chooseCity = "Choose a city: right-click › Edit Widget"
 
     /// Localized value of `key` in the language of `locale` (falls back to the bundle's preferred language).

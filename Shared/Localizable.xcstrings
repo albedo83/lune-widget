@@ -850,6 +850,244 @@
           }
         }
       }
+    },
+    "Add the widget: right-click the desktop, choose Edit Widgets, then search for “Lune”. To change the place, right-click the widget and choose Edit “Lune”." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add the widget: right-click the desktop, choose Edit Widgets, then search for “Lune”. To change the place, right-click the widget and choose Edit “Lune”."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajoutez le widget : clic droit sur le bureau, « Modifier les widgets », puis cherchez « Lune ». Pour changer de lieu, faites un clic droit sur le widget et choisissez « Modifier “Lune” »."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Widget hinzufügen: Rechtsklick auf den Schreibtisch, „Widgets bearbeiten“ wählen und nach „Lune“ suchen. Den Ort ändern Sie per Rechtsklick auf das Widget und „„Lune“ bearbeiten“."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añade el widget: clic derecho en el escritorio, «Editar widgets» y busca «Lune». Para cambiar el lugar, haz clic derecho en el widget y elige «Editar “Lune”»."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi il widget: clic destro sulla scrivania, «Modifica widget», poi cerca «Lune». Per cambiare luogo, clic destro sul widget e scegli «Modifica “Lune”»."
+          }
+        }
+      }
+    },
+    "Use my location" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use my location"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utiliser ma position"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meinen Standort verwenden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usar mi ubicación"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usa la mia posizione"
+          }
+        }
+      }
+    },
+    "Locating…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Locating…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Localisation…"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standort wird ermittelt …"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Localizando…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Localizzazione…"
+          }
+        }
+      }
+    },
+    "Location access is off for Lune. Allow it in System Settings › Privacy & Security › Location Services." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location access is off for Lune. Allow it in System Settings › Privacy & Security › Location Services."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’accès à la position est désactivé pour Lune. Autorisez-le dans Réglages Système › Confidentialité et sécurité › Service de localisation."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Standortzugriff ist für Lune deaktiviert. Erlauben Sie ihn in Systemeinstellungen › Datenschutz & Sicherheit › Ortungsdienste."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El acceso a la ubicación está desactivado para Lune. Actívalo en Ajustes del Sistema › Privacidad y seguridad › Servicios de localización."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’accesso alla posizione è disattivato per Lune. Consentilo in Impostazioni di Sistema › Privacy e sicurezza › Servizi di localizzazione."
+          }
+        }
+      }
+    },
+    "Could not determine your location. Try again." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not determine your location. Try again."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible de déterminer votre position. Réessayez."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ihr Standort konnte nicht ermittelt werden. Versuchen Sie es erneut."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo determinar tu ubicación. Inténtalo de nuevo."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile determinare la tua posizione. Riprova."
+          }
+        }
+      }
+    },
+    "Preview" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preview"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aperçu"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorschau"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vista previa"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anteprima"
+          }
+        }
+      }
+    },
+    "Press “Use my location” to see tonight’s preview." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press “Use my location” to see tonight’s preview."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appuyez sur « Utiliser ma position » pour voir l’aperçu de ce soir."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tippen Sie auf „Meinen Standort verwenden“, um die Vorschau für heute Abend zu sehen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulsa «Usar mi ubicación» para ver la vista previa de esta noche."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Premi «Usa la mia posizione» per vedere l’anteprima di stasera."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

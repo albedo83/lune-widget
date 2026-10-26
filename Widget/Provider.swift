@@ -50,49 +50,10 @@ struct Provider: AppIntentTimelineProvider {
                                  name: place.name, isCurrentLocation: false)
         }
         let store = LocationStore()
-        if let fresh = await CurrentLocation.fetch() { store.current = fresh }
+        if let fresh = await CurrentPlaceLocator.fetch() { store.current = fresh }
         guard let stored = store.current else { return nil }
         return ResolvedPlace(location: stored.location,
                              timeZone: TimeZone(identifier: stored.timeZoneID) ?? .current,
                              name: stored.name.isEmpty ? nil : stored.name, isCurrentLocation: true)
     }
-}
-
-/// One-shot location fix from inside the extension, bounded by a short timeout so the timeline is never blocked.
-enum CurrentLocation {
-    static let timeout: Duration = .seconds(4)
-
-    static func fetch() async -> StoredPlace? {
-        let manager = CLLocationManager()
-        guard manager.isAuthorizedForWidgetUpdates || isAuthorized(manager.authorizationStatus) else { return nil }
-        guard let location = await withTimeout(timeout, operation: { await firstLocation() }) else { return nil }
-        // CLGeocoder ignores task cancellation: cancel the request itself when the deadline passes.
-        let geocoder = GeocoderBox()
-        let placemark = await withTimeout(timeout, operation: {
-            try? await geocoder.value.reverseGeocodeLocation(location).first
-        }, onTimeout: { geocoder.value.cancelGeocode() })
-        let name = placemark.flatMap { $0.locality ?? $0.name } ?? ""
-        let tz = placemark?.timeZone ?? .current
-        return StoredPlace(location: GeoLocation(latitude: location.coordinate.latitude,
-                                                 longitude: location.coordinate.longitude),
-                           timeZoneID: tz.identifier, name: name, savedAt: Date())
-    }
-
-    private static func isAuthorized(_ status: CLAuthorizationStatus) -> Bool {
-        status == .authorizedAlways || status == .authorized
-    }
-
-    private static func firstLocation() async -> CLLocation? {
-        do {
-            for try await update in CLLocationUpdate.liveUpdates() {
-                if let location = update.location { return location }
-            }
-        } catch {}
-        return nil
-    }
-}
-
-/// CLGeocoder is thread-safe for start/cancel but not marked Sendable.
-private final class GeocoderBox: @unchecked Sendable {
-    let value = CLGeocoder()
 }

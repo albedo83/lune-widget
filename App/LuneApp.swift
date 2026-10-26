@@ -4,7 +4,8 @@ import SwiftUI
 struct LuneApp: App {
     var body: some Scene {
         WindowGroup {
-            Color.clear.frame(minWidth: 320, minHeight: 200)
+            ContentView()
         }
+        .windowResizability(.contentSize)
     }
 }
