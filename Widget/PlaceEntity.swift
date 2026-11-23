@@ -7,7 +7,7 @@ import MapKit
 struct PlaceEntity: AppEntity, Hashable {
     static let currentID = "current"
 
-    /// "current", or "lat,lon" with 5 decimals (~1 m).
+    /// "current", or a self-contained `PlaceID` (coordinates, time zone and name), or a legacy "lat,lon".
     let id: String
     let name: String
     let latitude: Double?
@@ -20,6 +20,15 @@ struct PlaceEntity: AppEntity, Hashable {
 
     static var typeDisplayRepresentation: TypeDisplayRepresentation { TypeDisplayRepresentation(name: "Place") }
     static var defaultQuery: PlaceQuery { PlaceQuery() }
+
+    /// Restores a place from its id alone: no cache involved. Legacy "lat,lon" ids have no name or time zone,
+    /// so they are labelled with readable coordinates instead of the raw id.
+    static func decode(id: String) -> PlaceEntity? {
+        if id == currentID { return .current }
+        guard let p = PlaceID.parse(id) else { return nil }
+        let name = p.name.isEmpty ? PlaceID.coordinateLabel(latitude: p.latitude, longitude: p.longitude) : p.name
+        return PlaceEntity(id: id, name: name, latitude: p.latitude, longitude: p.longitude, timeZoneID: p.timeZoneID)
+    }
 
     var isCurrent: Bool { id == Self.currentID }
 
@@ -39,51 +48,14 @@ struct PlaceEntity: AppEntity, Hashable {
     }
 
     init(name: String, latitude: Double, longitude: Double, timeZoneID: String, subtitle: String?) {
-        self.init(id: String(format: "%.5f,%.5f", locale: Locale(identifier: "en_US_POSIX"), latitude, longitude),
+        self.init(id: PlaceID.make(latitude: latitude, longitude: longitude, timeZoneID: timeZoneID, name: name),
                   name: name, latitude: latitude, longitude: longitude, timeZoneID: timeZoneID, subtitle: subtitle)
-    }
-}
-
-/// Searched places keyed by id, so `entities(for:)` can restore name and time zone from an id alone.
-enum PlaceCache {
-    private static let key = "placeCache"
-    private static let limit = 50
-    private struct Item: Codable { var name: String; var timeZoneID: String; var subtitle: String?; var savedAt: Date }
-
-    private static var defaults: UserDefaults { UserDefaults(suiteName: LocationStore.appGroupID) ?? .standard }
-
-    static func save(_ places: [PlaceEntity]) {
-        var all = load()
-        for p in places where !p.isCurrent {
-            all[p.id] = Item(name: p.name, timeZoneID: p.timeZoneID ?? TimeZone.current.identifier,
-                             subtitle: p.subtitle, savedAt: Date())
-        }
-        // Keep only the most recent entries.
-        if all.count > limit {
-            all = Dictionary(uniqueKeysWithValues: all.sorted { $0.value.savedAt > $1.value.savedAt }.prefix(limit)
-                .map { ($0.key, $0.value) })
-        }
-        if let data = try? JSONEncoder().encode(all) { defaults.set(data, forKey: key) }
-    }
-
-    static func entity(for id: String) -> PlaceEntity? {
-        if id == PlaceEntity.currentID { return .current }
-        let parts = id.split(separator: ",").compactMap { Double($0) }
-        guard parts.count == 2 else { return nil }
-        let item = load()[id]
-        return PlaceEntity(id: id, name: item?.name ?? id, latitude: parts[0], longitude: parts[1],
-                           timeZoneID: item?.timeZoneID, subtitle: item?.subtitle)
-    }
-
-    private static func load() -> [String: Item] {
-        guard let data = defaults.data(forKey: key) else { return [:] }
-        return (try? JSONDecoder().decode([String: Item].self, from: data)) ?? [:]
     }
 }
 
 struct PlaceQuery: EntityStringQuery {
     func entities(for identifiers: [PlaceEntity.ID]) async throws -> [PlaceEntity] {
-        identifiers.compactMap(PlaceCache.entity(for:))
+        identifiers.compactMap(PlaceEntity.decode(id:))
     }
 
     func entities(matching string: String) async throws -> [PlaceEntity] {
@@ -91,7 +63,7 @@ struct PlaceQuery: EntityStringQuery {
         request.naturalLanguageQuery = string
         request.resultTypes = .address
         let response = try await MKLocalSearch(request: request).start()
-        let places = response.mapItems.prefix(10).map { item -> PlaceEntity in
+        return response.mapItems.prefix(10).map { item -> PlaceEntity in
             let placemark = item.placemark
             let tz = item.timeZone ?? placemark.timeZone ?? .current
             let name = placemark.locality ?? item.name ?? string
@@ -100,8 +72,6 @@ struct PlaceQuery: EntityStringQuery {
                                longitude: placemark.coordinate.longitude, timeZoneID: tz.identifier,
                                subtitle: subtitle.isEmpty ? nil : subtitle)
         }
-        PlaceCache.save(places)
-        return places
     }
 
     func suggestedEntities() async throws -> [PlaceEntity] { [.current] }
