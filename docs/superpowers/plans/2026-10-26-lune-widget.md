@@ -323,6 +323,35 @@ Shading (decided): per pixel on the disk compute the sphere normal, its selenogr
 - [ ] **Step 5:** Regenerate the widget preview PNGs (fr 2026-10-26, fr 2026-11-10, fr two-windows, en 2026-11-10) and a contact sheet of 8 frames (0, 45, 90, 135, 180, 225, 270, 315) into the task workspace for the user to look at.
 - [ ] **Step 6:** Commit `feat: realistic NASA moon`.
 
+### Task 12: Sunset and sunrise line (change request during Task 11)
+
+User asked during the desktop check to show sunset/sunrise as well as the astronomical night ("les 2 à la fois si on a la place").
+
+**Files:**
+- Modify: `LuneKit/Sources/LuneKit/Night/NightReport.swift`, `NightCalculator.swift`, `TimelinePlanner.swift`; tests in `NightReportTests.swift`, `TimelinePlannerTests.swift`
+- Modify: `Shared/NightWidgetView.swift` (new line), previews/snapshots
+
+**Interfaces:**
+- Produces: `NightReport.sunset: Date?` (first descending −0.833° sun crossing in the period), `NightReport.sunrise: Date?` (first ascending crossing after `sunset`, or after period start if no sunset, within the period). `TimelinePlanner` includes both.
+- View: new line `☀ ↓ HH:mm   ↑ HH:mm` (sun-coloured, `Text(verbatim:)` icons, "—" if missing) placed between the ☾ line and the ✦ line, same column layout as the ☾ line; must fit the medium widget without truncating any other line (tighten spacing if needed, keep fonts readable).
+
+- [ ] **Step 1: Failing tests** — `paris20261026`: sunset 26 17:41, sunrise 27 07:29 (USNO 2026-10-27 rise 07:29), ±120 s; `paris20260621`: sunset 21 21:58 ±120 s; `northPoleWinter`: sunset and sunrise nil. TimelinePlanner Paris 2026-10-26 13:00 contains sunset ±120 s.
+- [ ] **Step 2:** FAIL → **Step 3:** implement → **Step 4:** `scripts/test.sh` and LuneKit pass.
+- [ ] **Step 5:** Regenerate widget previews (fr 2026-10-26, fr 2026-11-10, fr two-windows, en 2026-11-10) for the user.
+- [ ] **Step 6:** Commit `feat: sunset and sunrise line`.
+
+### Task 13: Remove the dark-window line (change request during Task 11)
+
+User: remove the whole dark-window line (green and grey) from the widget.
+
+**Files:** `Shared/NightWidgetView.swift` (remove the chip), `Shared/Strings.swift` + `Shared/Localizable.xcstrings` (remove dark-window keys and `Strings.darkWindow`), `LuneTests/StringsTests.swift` (remove the dark-window test), `LuneKit/Sources/LuneKit/Night/TimelinePlanner.swift` + its tests (stop adding dark-window bounds), snapshot tests (drop the two-windows preview). Keep `NightReport.darkWindows` and its LuneKit tests.
+
+- [ ] **Step 1:** Adjust tests first (TimelinePlanner no longer expects window bounds — add `refreshDatesExcludeDarkWindowBounds` for Paris 2026-11-10 20:00: the result contains no date equal to a dark-window bound that is not also an astro-night bound); run → FAIL.
+- [ ] **Step 2:** Implement the removals; restore the widget's vertical spacing to give the remaining lines room (VStack spacing back to 3 if it fits).
+- [ ] **Step 3:** `cd LuneKit && swift test` and `scripts/test.sh` pass; catalog completeness test passes.
+- [ ] **Step 4:** Regenerate previews (fr 2026-10-26, fr 2026-11-10, en 2026-11-10, de 2026-11-10).
+- [ ] **Step 5:** Commit `feat: remove dark-window line`.
+
 ### Task 11: On-desktop verification
 
 - [ ] **Step 1:** Run the app once, add the widget to the desktop, check it against USNO for today at the current location (rise/set ±2 min).

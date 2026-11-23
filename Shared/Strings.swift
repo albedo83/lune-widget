@@ -7,7 +7,6 @@ enum Strings {
     private final class BundleToken {}
     static var bundle: Bundle { Bundle(for: BundleToken.self) }
 
-    static let noDarkWindow = "No dark window tonight"
     static let noAstroNight = "No astronomical night"
     static let allNight = "All night"
     static let night = "night"
@@ -65,24 +64,6 @@ enum Strings {
         date.map { time($0, tz: tz) } ?? "—"
     }
 
-    /// "10 h 36" (fr), "10h 36m" (en)… from whole minutes.
-    static func duration(minutes: Int, locale: Locale) -> String {
-        String(format: localized("%lldh %02lldm", locale: locale), locale: locale, minutes / 60, minutes % 60)
-    }
-
-    /// The dark-window chip: "No dark window tonight", one window with its duration, or several with the total.
-    static func darkWindow(_ w: [DateInterval], tz: TimeZone, locale: Locale) -> String {
-        guard let first = w.first else { return localized(noDarkWindow, locale: locale) }
-        let minutes = w.reduce(0) { $0 + wholeMinutes($1) }
-        let total = duration(minutes: minutes, locale: locale)
-        if w.count == 1 {
-            return String(format: localized("Dark window %@ → %@ (%@)", locale: locale), locale: locale,
-                          time(first.start, tz: tz), time(first.end, tz: tz), total)
-        }
-        let ranges = w.map { "\(time($0.start, tz: tz)) → \(time($0.end, tz: tz))" }.joined(separator: " · ")
-        return String(format: localized("Dark windows %@ (%@)", locale: locale), locale: locale, ranges, total)
-    }
-
     /// "Nouvelle lune dans 14 j (9 nov.)": calendar days between the local days of `now` and `date` in `tz`.
     static func nextPhase(_ p: PrincipalPhase, date: Date, now: Date, tz: TimeZone, locale: Locale) -> String {
         var cal = Calendar(identifier: .gregorian)
@@ -103,10 +84,5 @@ enum Strings {
 
     private static func roundedToMinute(_ d: Date) -> Date {
         Date(timeIntervalSinceReferenceDate: (d.timeIntervalSinceReferenceDate / 60).rounded() * 60)
-    }
-
-    /// Minutes between the displayed (rounded) start and end, so the duration matches the shown times.
-    private static func wholeMinutes(_ i: DateInterval) -> Int {
-        Int((roundedToMinute(i.end).timeIntervalSince(roundedToMinute(i.start)) / 60).rounded())
     }
 }

@@ -19,9 +19,12 @@ Le widget ne remplace pas la météo : les nuages, il les regarde ailleurs.
   1. La **lune dessinée selon sa phase réelle**, le **nom de la phase** et le
      **% d'illumination**.
   2. ☾ **Lever et coucher de la lune**.
-  3. ✦ **Début et fin de la nuit astronomique** (soleil à −18° sous
-     l'horizon). Remplace le lever/coucher classique du soleil.
-  4. **La fenêtre noire** : la partie de la nuit astronomique où la lune est
+  3. ☀ **Coucher et lever du soleil** (ajouté à la demande de l'auteur
+     lors de l'essai sur le bureau : « les 2 à la fois si on a la
+     place ») et ✦ **début et fin de la nuit astronomique** (soleil à
+     −18° sous l'horizon).
+  4. ~~**La fenêtre noire**~~ — *retirée de l'affichage à la demande de l'auteur lors de l'essai sur le bureau (« enlève toute la ligne fenêtre ») ; le calcul reste dans LuneKit.*
+     Ancien texte : **La fenêtre noire** : la partie de la nuit astronomique où la lune est
      sous l'horizon. En vert avec heures et durée s'il y en a une, en gris
      (« Pas de fenêtre noire ce soir ») sinon.
   5. Une ligne « prochaine phase » : entre la nouvelle lune et la pleine
@@ -95,6 +98,9 @@ langue et la région du Mac.
   **lever du soleil** (ou à midi local si le soleil ne se lève pas ce
   jour-là). Ainsi, à 9 h, on voit déjà la nuit à venir, et les jours sans
   nuit astronomique ont quand même un repère fixe.
+- **Coucher / lever du soleil** affichés : le premier coucher (−0,833°,
+  descendant) dans la période midi J → midi J+1, puis le premier lever
+  qui le suit ; « — » s'il n'y en a pas.
 - **Lever / coucher de lune** affichés : le premier lever et le premier
   coucher dans la période midi J → midi J+1. S'il n'y en a pas dans cette
   période, afficher « — ».

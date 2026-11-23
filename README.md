@@ -1,6 +1,6 @@
 # Lune
 
-Widget macOS qui affiche la phase de la lune, son lever et coucher, la nuit astronomique et la « fenêtre noire » pour la photo du ciel profond.
+Widget macOS qui affiche la phase de la lune, son lever et coucher, le coucher et le lever du soleil et la nuit astronomique, pour la photo du ciel profond.
 
 En cours de développement : voir la [conception](docs/superpowers/specs) et le [plan](docs/superpowers/plans).
 

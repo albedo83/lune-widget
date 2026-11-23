@@ -38,6 +38,11 @@ public enum NightCalculator {
         let moonAltitude: (Date) -> Double = { Horizon.moonAltitude(at: $0, from: location) }
 
         let moonEvents = EventSearch.crossings(in: period, threshold: Altitudes.riseSet, moonAltitude)
+        let sunEvents = EventSearch.crossings(in: period, threshold: Altitudes.riseSet) {
+            Horizon.sunAltitude(at: $0, from: location)
+        }
+        let sunset = sunEvents.first { !$0.isRising }?.date
+        let sunrise = sunEvents.first { e in e.isRising && (sunset.map { e.date > $0 } ?? true) }?.date
         let astro = astroNight(in: period, location: location)
 
         let darkDomain: DateInterval?
@@ -59,6 +64,8 @@ public enum NightCalculator {
             period: period,
             moonrise: moonEvents.first { $0.isRising }?.date,
             moonset: moonEvents.first { !$0.isRising }?.date,
+            sunset: sunset,
+            sunrise: sunrise,
             astroNight: astro,
             darkWindows: darkWindows,
             referenceDate: reference,

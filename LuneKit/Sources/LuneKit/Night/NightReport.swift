@@ -17,6 +17,10 @@ public struct NightReport: Sendable, Equatable {
     public var moonrise: Date?
     /// First moonset in the period, if any.
     public var moonset: Date?
+    /// First sunset (Sun descending through −0.833°) in the period, if any.
+    public var sunset: Date?
+    /// First sunrise after `sunset` (or after the period start if there is no sunset), within the period.
+    public var sunrise: Date?
     public var astroNight: AstroNight
     /// Parts of the astronomical night (or of the whole period for `.wholePeriod`) with the Moon below the horizon.
     public var darkWindows: [DateInterval]
@@ -32,13 +36,16 @@ public struct NightReport: Sendable, Equatable {
     public var nextPhaseDate: Date
 
     public init(
-        period: DateInterval, moonrise: Date?, moonset: Date?, astroNight: AstroNight, darkWindows: [DateInterval],
+        period: DateInterval, moonrise: Date?, moonset: Date?, sunset: Date? = nil, sunrise: Date? = nil,
+        astroNight: AstroNight, darkWindows: [DateInterval],
         referenceDate: Date, illumination: Double, isWaxing: Bool, phaseName: MoonPhaseName,
         nextPhase: PrincipalPhase, nextPhaseDate: Date
     ) {
         self.period = period
         self.moonrise = moonrise
         self.moonset = moonset
+        self.sunset = sunset
+        self.sunrise = sunrise
         self.astroNight = astroNight
         self.darkWindows = darkWindows
         self.referenceDate = referenceDate

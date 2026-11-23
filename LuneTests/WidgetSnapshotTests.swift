@@ -19,13 +19,13 @@ final class WidgetSnapshotTests: XCTestCase {
             NightWidgetView(entry: entry).padding(16)
         }
         .frame(width: 344, height: 162)
-        .environment(\.locale, Locale(identifier: lang == "fr" ? "fr_FR" : "en_US"))
+        .environment(\.locale, Locale(identifier: ["fr": "fr_FR", "de": "de_DE"][lang] ?? "en_US"))
         let renderer = ImageRenderer(content: view)
         renderer.scale = 2
         let image = try XCTUnwrap(renderer.cgImage)
         guard let dir else { return }
         let png = try XCTUnwrap(NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:]))
-        try png.write(to: dir.appendingPathComponent("task-8-preview-\(lang)-\(name).png"))
+        try png.write(to: dir.appendingPathComponent("task-12-preview-\(lang)-\(name).png"))
     }
 
     func testRenderParisPreviews() throws {
@@ -36,12 +36,8 @@ final class WidgetSnapshotTests: XCTestCase {
                            to: dir)
             }
         }
-        // Edge layouts: no astronomical night (June), and two dark windows (synthetic).
+        try render(.sample(at: parisNoon(11, 10)), lang: "de", name: "2026-11-10", to: dir)
+        // Edge layouts: no astronomical night (June).
         try render(.sample(at: parisNoon(6, 21)), lang: "fr", name: "2026-06-21", to: dir)
-        var two = NightEntry.sample(at: parisNoon(11, 10))
-        let night = try XCTUnwrap(two.report?.darkWindows.first)
-        two.report?.darkWindows = [DateInterval(start: night.start, duration: 9000),
-                                   DateInterval(start: night.end.addingTimeInterval(-9000), end: night.end)]
-        try render(two, lang: "fr", name: "two-windows", to: dir)
     }
 }

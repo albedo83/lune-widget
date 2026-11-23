@@ -11,7 +11,7 @@ struct LuneWidget: Widget {
                 .containerBackground(for: .widget) { NightBackground() }
         }
         .configurationDisplayName("Lune")
-        .description("Moon phase, moonrise and moonset, and tonight's dark window.")
+        .description("Moon phase, moonrise and moonset, and the astronomical night.")
         .supportedFamilies([.systemMedium])
     }
 }

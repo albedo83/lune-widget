@@ -42,3 +42,28 @@ private func local(_ s: String, tz: String = "Europe/Paris") -> Date {
     let dates = TimelinePlanner.refreshDates(after: local("2026-12-21 21:00", tz: "Europe/Oslo"), location: loc, timeZone: tz)
     #expect(dates.contains(local("2026-12-22 12:00", tz: "Europe/Oslo")))
 }
+
+@Test func refreshDatesIncludeSunset() {
+    let dates = TimelinePlanner.refreshDates(after: local("2026-10-26 13:00"), location: parisLoc, timeZone: parisTZ)
+    let sunset = local("2026-10-26 17:41")
+    #expect(dates.contains { abs($0.timeIntervalSince(sunset)) <= 120 })
+}
+
+@Test func refreshDatesExcludeDarkWindowBounds() {
+    // Dark-window bounds are no longer planning inputs: only moon, sun and astro-night events remain.
+    let now = local("2026-11-20 20:00")
+    let dates = TimelinePlanner.refreshDates(after: now, location: parisLoc, timeZone: parisTZ)
+    let nextSwitch = NightCalculator.nextDisplaySwitch(after: now, location: parisLoc, timeZone: parisTZ)
+    var allowed: Set<Date> = [nextSwitch, local("2026-11-21 00:00")]
+    var windowBounds: Set<Date> = []
+    for t in [now, nextSwitch.addingTimeInterval(1)] {
+        let r = NightCalculator.report(at: t, location: parisLoc, timeZone: parisTZ)
+        allowed.formUnion([r.moonrise, r.moonset, r.sunset, r.sunrise].compactMap { $0 })
+        if case .interval(let i) = r.astroNight { allowed.formUnion([i.start, i.end]) }
+        for w in r.darkWindows { windowBounds.formUnion([w.start, w.end]) }
+    }
+    #expect(!windowBounds.isEmpty)
+    #expect(dates.allSatisfy { allowed.contains($0) })
+    // A dark-window bound that is not another event must not be scheduled.
+    for d in windowBounds.subtracting(allowed) { #expect(!dates.contains(d)) }
+}

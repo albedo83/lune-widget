@@ -99,3 +99,25 @@ private func near(_ a: Date?, _ b: Date, _ tol: TimeInterval = 120) -> Bool {
     #expect(r.nextPhase == .new)
     #expect(near(r.nextPhaseDate, utc("2026-11-09T07:02:00Z"), 300))
 }
+
+@Test func sunsetSunriseParis20261026() {
+    let r = NightCalculator.report(at: local("2026-10-26 21:00"), location: parisLoc, timeZone: parisTZ)
+    #expect(near(r.sunset, local("2026-10-26 17:41")))
+    #expect(near(r.sunrise, local("2026-10-27 07:29")))
+}
+
+@Test func sunsetParis20260621() {
+    let r = NightCalculator.report(at: local("2026-06-21 22:00"), location: parisLoc, timeZone: parisTZ)
+    #expect(near(r.sunset, local("2026-06-21 21:58")))
+    #expect(r.sunrise != nil)
+}
+
+@Test func sunsetSunriseNilAtNorthPoleWinter() {
+    let r = NightCalculator.report(
+        at: utc("2026-12-21T18:00:00Z"),
+        location: GeoLocation(latitude: 89, longitude: 0),
+        timeZone: TimeZone(identifier: "UTC")!
+    )
+    #expect(r.sunset == nil)
+    #expect(r.sunrise == nil)
+}

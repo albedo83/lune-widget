@@ -65,7 +65,6 @@ struct NightWidgetView: View {
                     .font(.system(size: 12, weight: .medium))
                     .foregroundStyle(.secondary)
                 eventsGrid(r)
-                darkWindowChip(r)
                 nextPhaseLine(r)
             }
             .lineLimit(1)
@@ -96,6 +95,12 @@ struct NightWidgetView: View {
                 Text("↓ " + Strings.time(r.moonset, tz: tz))
             }
             GridRow {
+                Text(verbatim: "☀")
+                Text(verbatim: "↓ " + Strings.time(r.sunset, tz: tz))
+                Text(verbatim: "↑ " + Strings.time(r.sunrise, tz: tz))
+            }
+            .foregroundStyle(sunStyle)
+            GridRow {
                 Text(verbatim: "✦")
                 switch r.astroNight {
                 case .none:
@@ -112,35 +117,13 @@ struct NightWidgetView: View {
         .font(.system(size: 12).monospacedDigit())
     }
 
+    private var sunStyle: AnyShapeStyle {
+        fullColor ? AnyShapeStyle(Color(red: 1.0, green: 0.78, blue: 0.35)) : AnyShapeStyle(.primary)
+    }
+
     private func astroStyle(_ r: NightReport) -> AnyShapeStyle {
         if r.astroNight == .none { return AnyShapeStyle(.secondary) }
         return fullColor ? AnyShapeStyle(Color(red: 0.70, green: 0.82, blue: 1.0)) : AnyShapeStyle(.primary)
-    }
-
-    @ViewBuilder
-    private func darkWindowChip(_ r: NightReport) -> some View {
-        if r.astroNight != .none {
-            let hasWindow = !r.darkWindows.isEmpty
-            Text(Strings.darkWindow(r.darkWindows, tz: tz, locale: locale))
-                .font(.system(size: 11, weight: .semibold).monospacedDigit())
-                .lineLimit(r.darkWindows.count > 1 ? 2 : 1)
-                .padding(.horizontal, 6)
-                .padding(.vertical, 2)
-                .foregroundStyle(chipForeground(hasWindow))
-                .background(chipBackground(hasWindow), in: RoundedRectangle(cornerRadius: 5))
-                .widgetAccentable()
-        }
-    }
-
-    private func chipForeground(_ hasWindow: Bool) -> AnyShapeStyle {
-        guard fullColor else { return AnyShapeStyle(hasWindow ? .primary : .secondary) }
-        return AnyShapeStyle(hasWindow ? Color(red: 0.55, green: 0.95, blue: 0.60) : Color(white: 0.62))
-    }
-
-    private func chipBackground(_ hasWindow: Bool) -> AnyShapeStyle {
-        guard fullColor else { return AnyShapeStyle(.primary.opacity(hasWindow ? 0.2 : 0.08)) }
-        return AnyShapeStyle(hasWindow ? Color(red: 0.10, green: 0.45, blue: 0.20).opacity(0.45)
-                                       : Color(white: 1).opacity(0.10))
     }
 
     private func nextPhaseLine(_ r: NightReport) -> some View {

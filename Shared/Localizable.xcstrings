@@ -1,40 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%lldh %02lldm" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lldh %02lldm"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld h %02lld"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld h %02lld min"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld h %02lld min"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%lld h %02lld min"
-          }
-        }
-      }
-    },
     "All night" : {
       "localizations" : {
         "en" : {
@@ -167,74 +133,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Posizione attuale"
-          }
-        }
-      }
-    },
-    "Dark window %@ → %@ (%@)" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dark window %@ → %@ (%@)"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fenêtre noire %@ → %@ (%@)"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dunkelfenster %@ → %@ (%@)"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ventana oscura %@ → %@ (%@)"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Finestra buia %@ → %@ (%@)"
-          }
-        }
-      }
-    },
-    "Dark windows %@ (%@)" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dark windows %@ (%@)"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fenêtres noires %@ (%@)"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dunkelfenster %@ (%@)"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ventanas oscuras %@ (%@)"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Finestre buie %@ (%@)"
           }
         }
       }
@@ -443,36 +341,36 @@
         }
       }
     },
-    "Moon phase, moonrise and moonset, and tonight's dark window." : {
+    "Moon phase, moonrise and moonset, and the astronomical night." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Moon phase, moonrise and moonset, and tonight's dark window."
+            "value" : "Moon phase, moonrise and moonset, and the astronomical night."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Phase de la lune, lever et coucher de la lune, et fenêtre noire de la nuit."
+            "value" : "Phase de la lune, lever et coucher de la lune, et nuit astronomique."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mondphase, Mondauf- und -untergang und das Dunkelfenster der Nacht."
+            "value" : "Mondphase, Mondauf- und -untergang und die astronomische Nacht."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fase lunar, salida y puesta de la luna, y la ventana oscura de la noche."
+            "value" : "Fase lunar, salida y puesta de la luna, y la noche astronómica."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fase lunare, sorgere e tramonto della luna e finestra buia della notte."
+            "value" : "Fase lunare, sorgere e tramonto della luna e notte astronomica."
           }
         }
       }
@@ -609,40 +507,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nessuna notte astronomica"
-          }
-        }
-      }
-    },
-    "No dark window tonight" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No dark window tonight"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pas de fenêtre noire ce soir"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Heute Nacht kein Dunkelfenster"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sin ventana oscura esta noche"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nessuna finestra buia stanotte"
           }
         }
       }
