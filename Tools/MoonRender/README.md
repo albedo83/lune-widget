@@ -16,6 +16,7 @@ colour map and lit for the phase:
 cd Tools/MoonRender
 swift test
 swift run -c release moonrender ../../Shared/Moon.xcassets   # options: --size 256 --step 5
+swift run -c release moonrender icon ../../App/Assets.xcassets/AppIcon.appiconset   # macOS app icon
 ```
 
 The widget extension ships the catalog; the app loads it from the embedded extension (`MoonFrame.bundle`).
